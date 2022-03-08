@@ -70,6 +70,10 @@ func GetBool(path string, defaultValue ...interface{}) bool {
 	return cast.ToBool(Get(path, defaultValue...))
 }
 
+func GetFloat64(path string, defaultValue ...interface{}) float64 {
+	return cast.ToFloat64(Get(path, defaultValue...))
+}
+
 // Env 读取环境变量，支持默认值
 func Env(envName string, defaultValue ...interface{}) interface{} {
 	if len(defaultValue) > 0 {
