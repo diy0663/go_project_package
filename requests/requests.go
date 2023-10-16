@@ -13,8 +13,8 @@ import (
 
 type ValidatorFunc func(interface{}, *gin.Context) map[string][]string
 
-func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
-
+// 被API调用
+func ValidateInAPI(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 	if err := c.ShouldBindJSON(obj); err != nil {
 		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 			"message": "请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。",
@@ -35,8 +35,8 @@ func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 	return true
 }
 
-// 在 ValidatorFunc 里面被使用
-func validate(data interface{}, rules govalidator.MapData, messages govalidator.MapData) map[string][]string {
+// 在 ValidatorFunc 里面被使用, 而 ValidatorFunc 是每个request单独验证里面需要用到的方法
+func ValidateInRequest(data interface{}, rules govalidator.MapData, messages govalidator.MapData) map[string][]string {
 	// 验证器配置
 	opts := govalidator.Options{
 		// 最里面会检查data 是否为指针类型

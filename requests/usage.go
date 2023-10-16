@@ -27,7 +27,7 @@ func SignupEmailExistFunc(data interface{}, c *gin.Context) map[string][]string 
 			"email:Email 格式不正确，请提供有效的邮箱地址",
 		},
 	}
-	return validate(data, rules, messages)
+	return ValidateInRequest(data, rules, messages)
 }
 
 type APIController struct {
@@ -35,7 +35,7 @@ type APIController struct {
 
 func (api *APIController) CheckEmailExist(c *gin.Context) {
 	request := SignupEmailExistRequest{}
-	ok := Validate(c, &request, SignupEmailExistFunc)
+	ok := ValidateInAPI(c, &request, SignupEmailExistFunc)
 	if !ok {
 		fmt.Println("验证不通过:", ok)
 		return
