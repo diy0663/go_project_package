@@ -21,7 +21,8 @@ func NewVerifyCode() *VerifyCode {
 	once.Do(func() {
 		internalVerifyCode = &VerifyCode{
 			StoreType: &RedisStore{
-				RedisClient: &redis.RedisClient{},
+				// 这里实例化的时候没有传入任何redis配置信息是因为使用了redis全局变量,这个变量在项目启动的时候需要一开始就被初始化
+				RedisClient: redis.Redis,
 				KeyPrefix:   config.GetString("app.name") + ":verifycode:",
 			},
 		}

@@ -26,6 +26,7 @@ func NewCaptcha() *Captcha {
 
 		// 使用全局 Redis 对象，并配置存储 Key 的前缀
 		store := RedisStore{
+			// NewCaptcha 的时候没有传入参数,所以在这里参数都已经被指定好了,那么在使用之前,就得确保redis.Redis 这个全局变量已经初始化好了,配置相关的也需要一早就初始化
 			RedisClient: redis.Redis,
 			KeyPrefix:   config.GetString("app.name") + ":captcha:",
 		}
